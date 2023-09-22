@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
+import net.runelite.api.Constants;
 import net.runelite.api.GameState;
 import net.runelite.api.Player;
 import net.runelite.api.events.ClientTick;
@@ -37,7 +38,7 @@ public class IdleFlasherPlugin extends Plugin
 	@Inject
 	private TintOverlay tintOverlay;
 
-	private long lastActive = client.getMouseLastPressedMillis();
+	private long lastActive = Long.MAX_VALUE;
 
 	@Getter(AccessLevel.PACKAGE)
 	private boolean idle = true; // TODO make different levels of idle for different durations.
@@ -77,8 +78,10 @@ public class IdleFlasherPlugin extends Plugin
 				lastActive = System.currentTimeMillis();
 				idle = false;
 			} else {
-				// Disable for a tick if they just clicked.
-				if (System.currentTimeMillis() - client.getMouseLastPressedMillis() < 600) {
+				boolean recentClick = System.currentTimeMillis() - client.getMouseLastPressedMillis() < config.idleTintClickDelay();
+				// TODO does this work with unlocked framerate? What about client lag?
+				boolean recentKeypress = client.getKeyboardIdleTicks()*Constants.CLIENT_TICK_LENGTH < config.idleTintKeyboardDelay();
+				if (recentClick || recentKeypress) {
 					idle = false;
 				} else {
 					idle = (System.currentTimeMillis() - lastActive >= config.idleTintDelay());

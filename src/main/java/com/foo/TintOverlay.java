@@ -28,8 +28,6 @@ public class TintOverlay extends OverlayPanel {
 
         setPosition(OverlayPosition.DYNAMIC);
         setPriority(OverlayPriority.LOW);
-        setLayer(OverlayLayer.MANUAL);
-        drawAfterLayer(WidgetInfo.INVENTORY);
     }
 
     @Override

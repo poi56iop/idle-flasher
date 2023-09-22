@@ -40,11 +40,39 @@ public interface IdleFlasherConfig extends Config
 			name = "Delay",
 			description = "Milliseconds to wait after becoming idle before flashing/tinting.",
 			section = sectionIdleTint,
-			position = 1
+			position = 2
 	)
 	default int idleTintDelay()
 	{
-		return 0;
+		return 1200;
+	}
+
+	@Range(min = 0)
+	@Units(value = Units.MILLISECONDS)
+	@ConfigItem(
+			keyName = "idleTintClickDelay",
+			name = "Clicking Disables For",
+			description = "Milliseconds to prevent flashing/tinting after a click.",
+			section = sectionIdleTint,
+			position = 3
+	)
+	default int idleTintClickDelay()
+	{
+		return 600;
+	}
+
+	@Range(min = 0)
+	@Units(value = Units.MILLISECONDS)
+	@ConfigItem(
+			keyName = "idleTintKeyboardDelay",
+			name = "Keypress Disables For",
+			description = "Milliseconds to prevent flashing/tinting after keyboard activity.",
+			section = sectionIdleTint,
+			position = 4
+	)
+	default int idleTintKeyboardDelay()
+	{
+		return 3000;
 	}
 	@Alpha
 	@ConfigItem(
@@ -52,7 +80,7 @@ public interface IdleFlasherConfig extends Config
 			name = "Color",
 			description = "Color used.",
 			section = sectionIdleTint,
-			position = 2
+			position = 5
 	)
 	default Color idleTintColor()
 	{
@@ -63,7 +91,7 @@ public interface IdleFlasherConfig extends Config
 			name = "Flashing",
 			description = "Flash between two colors.",
 			section = sectionIdleTint,
-			position = 3
+			position = 6
 	)
 	default boolean idleTintFlash()
 	{
@@ -75,7 +103,7 @@ public interface IdleFlasherConfig extends Config
 			name = "Color 2",
 			description = "Second color used when flashing.",
 			section = sectionIdleTint,
-			position = 4
+			position = 7
 	)
 	default Color idleTintColor2()
 	{
@@ -88,11 +116,11 @@ public interface IdleFlasherConfig extends Config
 			name = "Color 1 Time",
 			description = "Milliseconds to show color 1 when flashing.",
 			section = sectionIdleTint,
-			position = 5
+			position = 8
 	)
 	default int idleTintColor1Time()
 	{
-		return 600;
+		return 800;
 	}
 	@Range(min = 1)
 	@Units(value = Units.MILLISECONDS)
@@ -101,13 +129,12 @@ public interface IdleFlasherConfig extends Config
 			name = "Color 2 Time",
 			description = "Milliseconds to show color 2 when flashing.",
 			section = sectionIdleTint,
-			position = 6
+			position = 9
 	)
 	default int idleTintColor2Time()
 	{
-		return 600;
+		return 200;
 	}
-	@Alpha
 	@ConfigItem(
 			keyName = "activeTint",
 			name = "Enabled",
